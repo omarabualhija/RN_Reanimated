@@ -1,6 +1,9 @@
 import { Button, SafeAreaView, StyleSheet, Text, View } from "react-native";
 import React, { useState } from "react";
-import Animated, { useSharedValue } from "react-native-reanimated";
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+} from "react-native-reanimated";
 
 const AnimatedText = Animated.createAnimatedComponent(Text);
 
@@ -14,12 +17,18 @@ const App = () => {
     width.value = width.value + 10;
   };
 
-  console.log(`width ${width.value}`);
+  const rBoxStyle = useAnimatedStyle(() => {
+    return {
+      width: width.value,
+    };
+  }, []);
 
   return (
     <SafeAreaView style={styles.container}>
       <AnimatedText>{`width:${width.value}`}</AnimatedText>
-      <Animated.View style={{ width, height: 100, backgroundColor: "red" }} />
+      <Animated.View
+        style={[{ width, height: 100, backgroundColor: "red" }, rBoxStyle]}
+      />
       <Button title="Press me !" onPress={onPress} />
     </SafeAreaView>
   );
