@@ -5,32 +5,30 @@ import Animated, {
   useSharedValue,
 } from "react-native-reanimated";
 
-const AnimatedText = Animated.createAnimatedComponent(Text);
-
 const App = () => {
-  /// useSharedValue
-
-  const width = useSharedValue(100);
-
-  const onPress = () => {
-    // setWidth((prev) => prev + 10);
-    width.value = width.value + 10;
+  const onLayout = (e) => {
+    console.log(e.nativeEvent);
   };
 
-  const rBoxStyle = useAnimatedStyle(() => {
-    return {
-      width: width.value,
-    };
-  }, []);
-
   return (
-    <SafeAreaView style={styles.container}>
-      <AnimatedText>{`width:${width.value}`}</AnimatedText>
-      <Animated.View
-        style={[{ width, height: 100, backgroundColor: "red" }, rBoxStyle]}
-      />
-      <Button title="Press me !" onPress={onPress} />
-    </SafeAreaView>
+    <View style={styles.container}>
+      <View style={{ backgroundColor: "yellow" }}>
+        <View
+          onLayout={onLayout}
+          style={{
+            width: 200,
+            height: 150,
+            backgroundColor: "red",
+            start: 120,
+            top: 403,
+            // transform: [{ translateX: 120 }, { translateY: 403 }],
+          }}
+        />
+      </View>
+      <View
+        style={{ width: 100, height: 100, backgroundColor: "black" }}
+      ></View>
+    </View>
   );
 };
 
@@ -40,7 +38,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    justifyContent: "center",
-    alignItems: "center",
+    //justifyContent: "center",
+    //alignItems: "center",
   },
 });
